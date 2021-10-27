@@ -55,8 +55,9 @@ class MainFragment : Fragment() {
                 Log.d("Моя проверка", "Опа через интерфейс получен сигнал о загрузке!!!")
                 Log.d("Моя проверка", "View = $view")
                 Log.d("Моя проверка", "position = $position")
-                Log.d("Моя проверка", "position = ${item.url}")
-                viewModel.downloadItem(item)
+                Log.d("Моя проверка", "адрес = ${item.url}")
+                Log.d("Моя проверка", "Объект лайвдаты = ${item.currentLiveData}")
+                viewModel.fetchCurrentData(item)
                 viewModel.progLD.observe(viewLifecycleOwner, {
                     Log.d("Моя проверка", "Опа получен ответ!!! ${viewModel.progLD.value}")
                 })

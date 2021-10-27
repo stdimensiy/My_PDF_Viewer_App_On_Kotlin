@@ -4,9 +4,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypdfvieweronkotlin.R
 import com.example.mypdfvieweronkotlin.domain.Document
+import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 
 class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
@@ -38,6 +40,23 @@ class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun onViewAttachedToWindow(holder: MainViewHolder) {
         val item = items[holder.adapterPosition]
+        //подписка на текущую лайвдату
+        val currentLiveData: LiveData<LoadStatus> = item.currentLiveData
+        currentLiveData.observeForever{
+            Log.d("Моя проверка","Изменен статус текущей лайвдаты ${it.name}")
+            Log.d("Моя проверка","меняю картинку")
+            when (it){
+                LoadStatus.IS_MISSING -> {
+                    holder.iconDownloadOff()
+                    holder.iconDeleteOn()
+                }
+                LoadStatus.UNKNOWN -> {
+                    holder.iconDownloadOn()
+                    holder.iconDeleteOff()
+                }
+            }
+        }
+
         Log.d("Моя проверка", "Выполнился метод-сигнал , что вьюха приаттачена к окну")
         holder.ivDownload.setOnClickListener {
             Log.d("Моя проверка", "Отловлено событие нажания на кнопку загрузки $item")
