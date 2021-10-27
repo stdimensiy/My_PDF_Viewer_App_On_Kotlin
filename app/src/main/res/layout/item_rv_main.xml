@@ -2,6 +2,7 @@
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_margin="4dp"
@@ -63,6 +64,39 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_twotone_delete_24" />
+
+        <ImageView
+            android:id="@+id/imageView_error"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:baselineAlignBottom="false"
+            android:contentDescription="Заглушка ошибки"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_twotone_error_24" />
+
+        <ImageView
+            android:id="@+id/imageView_unknown"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:baselineAlignBottom="false"
+            android:contentDescription="Заглушка ошибки"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_twotone_error_24" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_download"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_download"
+            app:layout_constraintTop_toTopOf="@+id/imageView_download" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

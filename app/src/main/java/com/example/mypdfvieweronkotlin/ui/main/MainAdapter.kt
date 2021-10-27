@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypdfvieweronkotlin.R
 import com.example.mypdfvieweronkotlin.domain.Document
@@ -14,12 +15,12 @@ import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
     //private val fragment: Fragment = _fragment
     private var items: ArrayList<Document> = arrayListOf(
-        Document("Первый", "shttp://souos.ru/testpdf/static/test_pr_p_1.pdf"),
-        Document("Втрой", "shttp://souos.ru/testpdf/static/test_pr_p_2.pdf"),
-        Document("Третий", "shttp://souos.ru/testpdf/static/test_pr_p_3.pdf"),
-        Document("Четвертый", "shttp://souos.ru/testpdf/static/test_pr_p_4.pdf"),
-        Document("Пятый", "shttp://souos.ru/testpdf/static/test_pr_p_5.pdf"),
-    )
+        Document("Первый", "shttp://souos.ru/testpdf/static/test_pr_p_1.pdf", MutableLiveData<LoadStatus>(LoadStatus.UNKNOWN)),
+        Document("Втрой", "shttp://souos.ru/testpdf/static/test_pr_p_2.pdf", MutableLiveData<LoadStatus>(LoadStatus.IS_LOADED)),
+        Document("Третий", "shttp://souos.ru/testpdf/static/test_pr_p_3.pdf", MutableLiveData<LoadStatus>(LoadStatus.IS_LOADING)),
+        Document("Четвертый", "shttp://souos.ru/testpdf/static/test_pr_p_4.pdf", MutableLiveData<LoadStatus>(LoadStatus.ERROR)),
+        Document("Пятый", "shttp://souos.ru/testpdf/static/test_pr_p_5.pdf", MutableLiveData<LoadStatus>(LoadStatus.IS_MISSING))
+        )
     private var onItemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -46,13 +47,40 @@ class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
             Log.d("Моя проверка","Изменен статус текущей лайвдаты ${it.name}")
             Log.d("Моя проверка","меняю картинку")
             when (it){
-                LoadStatus.IS_MISSING -> {
-                    holder.iconDownloadOff()
-                    holder.iconDeleteOn()
-                }
-                LoadStatus.UNKNOWN -> {
+                LoadStatus.IS_MISSING -> {   //не загружен
                     holder.iconDownloadOn()
                     holder.iconDeleteOff()
+                    holder.iconErrorOff()
+                    holder.iconUnknownOff()
+                    holder.progressBarOff()
+                }
+                LoadStatus.ERROR -> {    // состояние ошибки
+                    holder.iconDownloadOff()
+                    holder.iconDeleteOff()
+                    holder.iconErrorOn()
+                    holder.iconUnknownOff()
+                    holder.progressBarOff()
+                }
+                LoadStatus.IS_LOADING -> {    // состояние процесса загрузки
+                    holder.iconDownloadOff()
+                    holder.iconDeleteOff()
+                    holder.iconErrorOff()
+                    holder.iconUnknownOff()
+                    holder.progressBarOn()
+                }
+                LoadStatus.IS_LOADED -> {    // состояние  когда объект загружен
+                    holder.iconDownloadOff()
+                    holder.iconDeleteOn()
+                    holder.iconErrorOff()
+                    holder.iconUnknownOff()
+                    holder.progressBarOff()
+                }
+                else -> {
+                    holder.iconDownloadOff() // прочие состояния, когда стстус объекта неизвестен
+                    holder.iconDeleteOff()
+                    holder.iconErrorOff()
+                    holder.iconUnknownOn()
+                    holder.progressBarOff()
                 }
             }
         }
