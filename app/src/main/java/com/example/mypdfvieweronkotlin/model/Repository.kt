@@ -1,7 +1,9 @@
 package com.example.mypdfvieweronkotlin.model
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.domain.LoadStatus
@@ -9,6 +11,7 @@ import com.example.mypdfvieweronkotlin.model.interfaces.CallBack
 import com.example.mypdfvieweronkotlin.model.interfaces.LocalRepository
 import com.example.mypdfvieweronkotlin.model.interfaces.RemoteRepository
 import okhttp3.*
+import java.io.File
 import java.io.IOException
 
 class Repository : LocalRepository, RemoteRepository {
@@ -41,8 +44,16 @@ class Repository : LocalRepository, RemoteRepository {
         )
     )
 
-    override fun deleteFile(item: Document, callBack: CallBack<Document>) {
-        //TODO("Not yet implemented")
+    override fun deleteFile(item: Document, context: Context) {
+        val dir: File = context.filesDir
+        val file = File(dir, item.fileName)
+        if (file.delete()) {
+            Log.d("Моя проверка", "Репозиторий - Файл удален")
+            item.currentLiveData.postValue(LoadStatus.IS_MISSING)
+        } else {
+            Log.d("Моя проверка", "Репозиторий - Файл НЕ УДАЛЕН")
+            item.currentLiveData.postValue(LoadStatus.IS_LOADED)
+        }
     }
 
     override fun saveFile(item: Document, callBack: CallBack<Document>) {

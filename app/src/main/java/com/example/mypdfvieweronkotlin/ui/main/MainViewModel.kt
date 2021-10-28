@@ -41,10 +41,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         item.currentLiveData.postValue(LoadStatus.IS_LOADING)
         Log.d("Моя проверка", "VM - иннициализация процесса удаления---")
         Log.d("Моя проверка", "VM - элемента с адреса: ${item.fileName}")
-        Thread.sleep(3_000)  // wait for 3 second
-        // модуль контроля получаемого результата
-        //...
-        //если чтото пошло не так
+        repository.deleteFile(item, getApplication())
         item.currentLiveData.postValue(LoadStatus.ERROR)
         //если все в порядке
         item.currentLiveData.postValue(LoadStatus.IS_MISSING)
