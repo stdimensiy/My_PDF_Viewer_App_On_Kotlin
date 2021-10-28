@@ -56,12 +56,17 @@ class Repository : LocalRepository, RemoteRepository {
         }
     }
 
-    override fun saveFile(item: Document, callBack: CallBack<Document>) {
-        //TODO("Not yet implemented")
-    }
-
-    override fun fileIsPresent(item: Document, callBack: CallBack<Document>) {
-        //TODO("Not yet implemented")
+    override fun fileIsPresent(item: Document, context: Context) {
+        // проверка наличия файла во внутреннем хранилище
+        val dir: File = context.filesDir
+        val file = File(dir, item.fileName)
+        if(file.isFile){
+            Log.d("Моя проверка", "Репозиторий - Файл Найден")
+            item.currentLiveData.postValue(LoadStatus.IS_LOADED)
+        } else {
+            Log.d("Моя проверка", "Репозиторий - Файл НЕ НАЙДЕН")
+            item.currentLiveData.postValue(LoadStatus.IS_MISSING)
+        }
     }
 
     override fun getDocumentsList(callBack: CallBack<List<Document>>) {

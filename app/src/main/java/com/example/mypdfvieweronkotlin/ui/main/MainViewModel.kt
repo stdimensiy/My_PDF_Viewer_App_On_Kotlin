@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.model.Repository
@@ -18,9 +17,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository.getDocumentsList(object : CallBack<List<Document>> {
             override fun onResult(value: List<Document>) {
                 currentDocumentList.postValue(value)
+                checkAllElements(value)
             }
         })
     }
+
+    fun checkAllElements(items: List<Document>) {
+        items.forEach { checkStatus(it) }
+    }
+
 
     fun downloadItem(item: Document) {
         // Загрузка документа с удаленного сервера во внутреннее хранилище
@@ -52,14 +57,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         item.currentLiveData.postValue(LoadStatus.IS_LOADING)
         Log.d("Моя проверка", "VM - иннициализация процесса проверки стстуса---")
         Log.d("Моя проверка", "VM - элемента с адреса: ${item.name}")
-
-        Thread.sleep(3_000)  // wait for 3 second
-        // модуль контроля получаемого результата
-        //...
-        //если чтото пошло не так
-        item.currentLiveData.postValue(LoadStatus.ERROR)
-        //если все в порядке
-        item.currentLiveData.postValue(LoadStatus.IS_MISSING)
+        repository.fileIsPresent(item, getApplication())
     }
 
 }
