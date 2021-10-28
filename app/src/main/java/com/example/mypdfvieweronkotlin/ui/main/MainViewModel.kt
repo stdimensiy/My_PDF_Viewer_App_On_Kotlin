@@ -1,14 +1,23 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.domain.LoadStatus
+import com.example.mypdfvieweronkotlin.model.Repository
+import com.example.mypdfvieweronkotlin.model.interfaces.CallBack
 
 class MainViewModel : ViewModel() {
+    private val repository: Repository = Repository()
+    var currentDocumentList = MutableLiveData<List<Document>>()
 
     fun fetchData() {
-        // должен загружаться список файлов из базы
+        repository.getDocumentsList(object : CallBack<List<Document>> {
+            override fun onResult(value: List<Document>) {
+                currentDocumentList.postValue(value)
+            }
+        })
     }
 
     fun downloadItem(item: Document) {

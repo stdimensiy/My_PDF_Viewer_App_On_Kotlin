@@ -38,10 +38,14 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        if (savedInstanceState == null) viewModel.fetchData()
         val mainRecyclerView = binding.homeList
         mainRecyclerView.adapter = adapter
         mainRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        viewModel.currentDocumentList.observe(viewLifecycleOwner, {
+            adapter.items = it
+        })
         adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClickToDownload(
                 view: View,
