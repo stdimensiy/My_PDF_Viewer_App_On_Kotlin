@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypdfvieweronkotlin.databinding.MainFragmentBinding
+import com.example.mypdfvieweronkotlin.domain.Command
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 import com.example.mypdfvieweronkotlin.ui.viewer.ViewerViewModel
@@ -51,16 +52,29 @@ class MainFragment : Fragment() {
         mainRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClickToDownload(view: View, position: Int, item: Document) {
-                Log.d("Моя проверка", "Опа через интерфейс получен сигнал о загрузке!!!")
-                Log.d("Моя проверка", "View = $view")
-                Log.d("Моя проверка", "position = $position")
-                Log.d("Моя проверка", "адрес = ${item.url}")
-                Log.d("Моя проверка", "Объект лайвдаты = ${item.currentLiveData}")
-                viewModel.fetchCurrentData(item)
-                viewModel.progLD.observe(viewLifecycleOwner, {
-                    Log.d("Моя проверка", "Опа получен ответ!!! ${viewModel.progLD.value}")
-                })
+            override fun onItemClickToDownload(
+                view: View,
+                position: Int,
+                item: Document,
+                command: Command
+            ) {
+                when (command) {
+                    Command.DOWNLOAD -> {
+                        Log.d("Моя проверка", "Фрагмент - Получен сигнал о загрузке!!!")
+                        viewModel.downloadItem(item)
+                    }
+                    Command.DELETE -> {
+                        Log.d("Моя проверка", "Фрагмент - получен сигнал о УДАЛЕНИИ!!")
+                        viewModel.deleteItem(item)
+                    }
+                    Command.CHECK_STATUS -> {
+                        Log.d("Моя проверка", "Фрагмент - получен сигнал о УДАЛЕНИИ!!")
+                        viewModel.checkStatus(item)
+                    }
+                    Command.WATCH -> {
+                        Log.d("Моя проверка","Фрагмент - получен сигнал о Просмотре!")
+                    }
+                }
             }
         })
     }

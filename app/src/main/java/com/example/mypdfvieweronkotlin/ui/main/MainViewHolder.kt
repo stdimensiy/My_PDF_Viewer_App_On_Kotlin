@@ -15,7 +15,7 @@ class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val ivDelete: ImageView = itemView.findViewById(R.id.imageView_delete)
     val ivError: ImageView = itemView.findViewById(R.id.imageView_error)
     val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
-    val clItem: ConstraintLayout = itemView.findViewById((R.id.cl_item))
+    val clickItem: ConstraintLayout = itemView.findViewById((R.id.cl_item))
 
     fun iconDeleteOff() {
         ivDelete.visibility = View.GONE
