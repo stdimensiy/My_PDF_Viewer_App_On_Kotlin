@@ -13,7 +13,6 @@ import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 
 class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
-    //private val fragment: Fragment = _fragment
     private var items: ArrayList<Document> = arrayListOf(
         Document(
             "Первый",
@@ -139,7 +138,10 @@ class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivUnknown.setOnClickListener {
-            Log.d("Моя проверка", "Отловлено событие нажания на кнопку неизвестного состояния $item")
+            Log.d(
+                "Моя проверка",
+                "Отловлено событие нажания на кнопку неизвестного состояния $item"
+            )
             onItemClickListener?.onItemClickToDownload(
                 holder.itemView,
                 holder.adapterPosition,

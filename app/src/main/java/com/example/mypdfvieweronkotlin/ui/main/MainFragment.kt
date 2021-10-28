@@ -1,6 +1,5 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,9 +12,6 @@ import com.example.mypdfvieweronkotlin.databinding.MainFragmentBinding
 import com.example.mypdfvieweronkotlin.domain.Command
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
-import com.example.mypdfvieweronkotlin.ui.viewer.ViewerViewModel
-import okhttp3.*
-import java.io.IOException
 
 class MainFragment : Fragment() {
 
@@ -27,11 +23,6 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        //if (savedInstanceState == null) viewModel.fetchData()
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +63,7 @@ class MainFragment : Fragment() {
                         viewModel.checkStatus(item)
                     }
                     Command.WATCH -> {
-                        Log.d("Моя проверка","Фрагмент - получен сигнал о Просмотре!")
+                        Log.d("Моя проверка", "Фрагмент - получен сигнал о Просмотре!")
                     }
                 }
             }
@@ -83,40 +74,4 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    fun downloadItem(item: Document) {
-        Log.d("Моя проверка", "Старт процесса скачивания")
-        downloadPdf(item.url)
-        Log.d("Моя проверка", "Остановка процесса скачивания")
-    }
-
-    fun downloadPdf(pdfUrl: String) {
-        val request = Request.Builder().url(pdfUrl).build()
-        val client = OkHttpClient.Builder().build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                println("failed to download")
-                //complection(true)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                println("successful download")
-                val pdfData = response.body?.byteStream()
-                if (pdfData != null) {
-                    try {
-                        requireContext().openFileOutput("myFile.pdf", Context.MODE_PRIVATE)
-                            .use { output ->
-                                output.write(pdfData.readBytes())
-                            }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-                //complection(true)
-            }
-
-        })
-    }
-
 }
