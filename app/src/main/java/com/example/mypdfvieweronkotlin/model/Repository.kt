@@ -10,12 +10,13 @@ import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.model.interfaces.CallBack
 import com.example.mypdfvieweronkotlin.model.interfaces.LocalRepository
 import com.example.mypdfvieweronkotlin.model.interfaces.RemoteRepository
+import com.example.mypdfvieweronkotlin.model.retrofit.RemoteConstants
 import okhttp3.*
 import java.io.File
 import java.io.IOException
 
 class Repository : LocalRepository, RemoteRepository {
-    private val basePdfUrlPath = "https://souos.ru/testpdf/static/"
+    private val basePdfUrlPath = RemoteConstants.PDF_SERVER_URL
     private val plugDocumentList: ArrayList<Document> = arrayListOf(
         Document(
             "Первый",
