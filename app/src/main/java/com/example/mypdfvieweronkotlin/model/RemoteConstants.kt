@@ -1,4 +1,4 @@
-package com.example.mypdfvieweronkotlin.model.retrofit
+package com.example.mypdfvieweronkotlin.model
 
 object RemoteConstants {
     /** Server endpoint  базовый адрес размещения PDF файлов
