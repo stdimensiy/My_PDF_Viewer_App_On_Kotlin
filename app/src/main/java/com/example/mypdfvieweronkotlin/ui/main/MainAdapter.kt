@@ -13,33 +13,7 @@ import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 
 class MainAdapter() : RecyclerView.Adapter<MainViewHolder>() {
-    private var items: ArrayList<Document> = arrayListOf(
-        Document(
-            "Первый",
-            "shttp://souos.ru/testpdf/static/test_pr_p_1.pdf",
-            MutableLiveData<LoadStatus>(LoadStatus.UNKNOWN)
-        ),
-        Document(
-            "Втрой",
-            "shttp://souos.ru/testpdf/static/test_pr_p_2.pdf",
-            MutableLiveData<LoadStatus>(LoadStatus.IS_LOADED)
-        ),
-        Document(
-            "Третий",
-            "shttp://souos.ru/testpdf/static/test_pr_p_3.pdf",
-            MutableLiveData<LoadStatus>(LoadStatus.IS_LOADING)
-        ),
-        Document(
-            "Четвертый",
-            "shttp://souos.ru/testpdf/static/test_pr_p_4.pdf",
-            MutableLiveData<LoadStatus>(LoadStatus.ERROR)
-        ),
-        Document(
-            "Пятый",
-            "shttp://souos.ru/testpdf/static/test_pr_p_5.pdf",
-            MutableLiveData<LoadStatus>(LoadStatus.IS_MISSING)
-        )
-    )
+    var items: List<Document> = listOf()
     private var onItemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
