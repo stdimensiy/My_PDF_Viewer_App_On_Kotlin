@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface RetrofitServicesPdfApp {
     @GET("index.php")
-    fun getDocumentList(): Call<Document>
+    fun getDocumentList(): Call<List<Document>>
 }

@@ -1,15 +1,15 @@
 package com.example.mypdfvieweronkotlin.model
 
 import android.content.Context
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.model.interfaces.CallBack
 import com.example.mypdfvieweronkotlin.model.interfaces.LocalRepository
 import com.example.mypdfvieweronkotlin.model.interfaces.RemoteRepository
+import com.example.mypdfvieweronkotlin.model.interfaces.RetrofitServicesPdfApp
+import com.example.mypdfvieweronkotlin.model.retrofit.Common
 import com.example.mypdfvieweronkotlin.model.retrofit.RemoteConstants
 import okhttp3.*
 import java.io.File
@@ -17,6 +17,7 @@ import java.io.IOException
 
 class Repository : LocalRepository, RemoteRepository {
     private val basePdfUrlPath = RemoteConstants.PDF_SERVER_URL
+    private val networkServicesPdfApp: RetrofitServicesPdfApp = Common.retrofitServis
     private val plugDocumentList: ArrayList<Document> = arrayListOf(
         Document(
             "Первый",
@@ -61,7 +62,7 @@ class Repository : LocalRepository, RemoteRepository {
         // проверка наличия файла во внутреннем хранилище
         val dir: File = context.filesDir
         val file = File(dir, item.fileName)
-        if(file.isFile){
+        if (file.isFile) {
             Log.d("Моя проверка", "Репозиторий - Файл Найден")
             item.currentLiveData.postValue(LoadStatus.IS_LOADED)
         } else {
@@ -71,8 +72,23 @@ class Repository : LocalRepository, RemoteRepository {
     }
 
     override fun getDocumentsList(callBack: CallBack<List<Document>>) {
-        Log.d("Моя проверка", "Репозиторий - передаю список файлов")
-        callBack.onResult(plugDocumentList)
+        Log.d("Моя проверка", "Репозиторий - апрашиваю список файлов")
+        //callBack.onResult(plugDocumentList)
+        networkServicesPdfApp.getDocumentList().enqueue(
+            object : retrofit2.Callback<List<Document>> {
+                override fun onResponse(
+                    call: retrofit2.Call<List<Document>>,
+                    response: retrofit2.Response<List<Document>>
+                ) {
+                    Log.d("Моя проверка", "Репозиторий - список файлов получен")
+                    response.body()?.let {callBack.onResult(it) }
+                }
+
+                override fun onFailure(call: retrofit2.Call<List<Document>>, t: Throwable) {
+                    Log.d("Моя проверка", "Репозиторий - ОШИБКА при получении списка файлов")
+                }
+
+            })
     }
 
     override fun getDocument(item: Document, context: Context) {
@@ -87,8 +103,6 @@ class Repository : LocalRepository, RemoteRepository {
 
             override fun onResponse(call: Call, response: Response) {
                 Log.d("Моя проверка", "Репозиторий - Файл загружен")
-                Log.d("Моя проверка", "Репозиторий - Заголовки ответа${response.headers}")
-                Log.d("Моя проверка", "Репозиторий - Заголовки ответа${response.message}")
                 val pdfData = response.body?.byteStream()
                 if (pdfData != null) {
                     try {

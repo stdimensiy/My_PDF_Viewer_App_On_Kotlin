@@ -45,6 +45,7 @@ class MainFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewModel.currentDocumentList.observe(viewLifecycleOwner, {
             adapter.items = it
+            adapter.notifyDataSetChanged()
         })
         adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClickToDownload(
