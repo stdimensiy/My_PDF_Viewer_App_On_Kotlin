@@ -1,7 +1,6 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +36,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         if (savedInstanceState == null) viewModel.fetchData()
         val mainRecyclerView = binding.homeList
         mainRecyclerView.adapter = adapter
@@ -56,19 +55,16 @@ class MainFragment : Fragment() {
             ) {
                 when (command) {
                     Command.DOWNLOAD -> {
-                        Log.d("Моя проверка", "Фрагмент - Получен сигнал о загрузке!!!")
                         viewModel.downloadItem(item)
                     }
                     Command.DELETE -> {
-                        Log.d("Моя проверка", "Фрагмент - получен сигнал о УДАЛЕНИИ!!")
                         viewModel.deleteItem(item)
                     }
                     Command.CHECK_STATUS -> {
-                        Log.d("Моя проверка", "Фрагмент - получен сигнал о УДАЛЕНИИ!!")
                         viewModel.checkStatus(item)
                     }
                     Command.WATCH -> {
-                        Log.d("Моя проверка", "Фрагмент - получен сигнал о Просмотре!")
+                        // на будущее добавить переход к фрагменту отображения данных
                     }
                 }
             }
