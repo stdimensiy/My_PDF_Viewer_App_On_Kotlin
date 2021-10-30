@@ -1,8 +1,10 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypdfvieweronkotlin.R
 import com.example.mypdfvieweronkotlin.domain.Command
@@ -75,7 +77,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
         }
 
         holder.ivDownload.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -83,7 +85,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivDelete.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -91,7 +93,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivUnknown.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -99,7 +101,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivError.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -107,7 +109,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.progressBar.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -115,12 +117,9 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.clickItem.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
-                holder.itemView,
-                holder.adapterPosition,
-                item,
-                Command.WATCH
-            )
+            val bundle = Bundle()
+            bundle.putString("fileName", item.fileName)
+            holder.itemView.findNavController().navigate(R.id.viewerFragment, bundle)
         }
     }
 

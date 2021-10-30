@@ -1,10 +1,10 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypdfvieweronkotlin.databinding.MainFragmentBinding
@@ -14,10 +14,6 @@ import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private lateinit var adapter: MainAdapter
     private lateinit var viewModel: MainViewModel
     private var _binding: MainFragmentBinding? = null
@@ -26,7 +22,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -47,25 +43,16 @@ class MainFragment : Fragment() {
             adapter.notifyDataSetChanged()
         })
         adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClickToDownload(
+            override fun onItemCommandBtnClick(
                 view: View,
                 position: Int,
                 item: Document,
-                command: Command
+                command: Command,
             ) {
                 when (command) {
-                    Command.DOWNLOAD -> {
-                        viewModel.downloadItem(item)
-                    }
-                    Command.DELETE -> {
-                        viewModel.deleteItem(item)
-                    }
-                    Command.CHECK_STATUS -> {
-                        viewModel.checkStatus(item)
-                    }
-                    Command.WATCH -> {
-                        // на будущее добавить переход к фрагменту отображения данных
-                    }
+                    Command.DOWNLOAD -> viewModel.downloadItem(item)
+                    Command.DELETE -> viewModel.deleteItem(item)
+                    Command.CHECK_STATUS -> viewModel.checkStatus(item)
                 }
             }
         })

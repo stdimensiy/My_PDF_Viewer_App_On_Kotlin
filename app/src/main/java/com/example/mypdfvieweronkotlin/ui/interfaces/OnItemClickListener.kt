@@ -5,5 +5,5 @@ import com.example.mypdfvieweronkotlin.domain.Command
 import com.example.mypdfvieweronkotlin.domain.Document
 
 interface OnItemClickListener {
-    fun onItemClickToDownload(view: View, position: Int, item: Document, command: Command)
+    fun onItemCommandBtnClick(view: View, position: Int, item: Document, command: Command)
 }
