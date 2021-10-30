@@ -1,8 +1,10 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypdfvieweronkotlin.R
 import com.example.mypdfvieweronkotlin.domain.Command
@@ -36,28 +38,28 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
         val currentLiveData: LiveData<LoadStatus> = item.currentLiveData
         currentLiveData.observeForever {
             when (it) {
-                LoadStatus.IS_MISSING -> {   //не загружен
+                LoadStatus.IS_MISSING -> {
                     holder.iconDownloadOn()
                     holder.iconDeleteOff()
                     holder.iconErrorOff()
                     holder.iconUnknownOff()
                     holder.progressBarOff()
                 }
-                LoadStatus.ERROR -> {    // состояние ошибки
+                LoadStatus.ERROR -> {
                     holder.iconDownloadOff()
                     holder.iconDeleteOff()
                     holder.iconErrorOn()
                     holder.iconUnknownOff()
                     holder.progressBarOff()
                 }
-                LoadStatus.IS_LOADING -> {    // состояние процесса загрузки
+                LoadStatus.IS_LOADING -> {
                     holder.iconDownloadOff()
                     holder.iconDeleteOff()
                     holder.iconErrorOff()
                     holder.iconUnknownOff()
                     holder.progressBarOn()
                 }
-                LoadStatus.IS_LOADED -> {    // состояние  когда объект загружен
+                LoadStatus.IS_LOADED -> {
                     holder.iconDownloadOff()
                     holder.iconDeleteOn()
                     holder.iconErrorOff()
@@ -65,7 +67,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
                     holder.progressBarOff()
                 }
                 else -> {
-                    holder.iconDownloadOff() // прочие состояния, когда стстус объекта неизвестен
+                    holder.iconDownloadOff()
                     holder.iconDeleteOff()
                     holder.iconErrorOff()
                     holder.iconUnknownOn()
@@ -75,7 +77,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
         }
 
         holder.ivDownload.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -83,7 +85,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivDelete.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -91,7 +93,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivUnknown.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -99,7 +101,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.ivError.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -107,7 +109,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.progressBar.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
+            onItemClickListener?.onItemCommandBtnClick(
                 holder.itemView,
                 holder.adapterPosition,
                 item,
@@ -115,12 +117,18 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
             )
         }
         holder.clickItem.setOnClickListener {
-            onItemClickListener?.onItemClickToDownload(
-                holder.itemView,
-                holder.adapterPosition,
-                item,
-                Command.WATCH
-            )
+            if (item.currentLiveData.value?.equals(LoadStatus.IS_LOADED) == true) {
+                val bundle = Bundle()
+                bundle.putString("fileName", item.fileName)
+                holder.itemView.findNavController().navigate(R.id.viewerFragment, bundle)
+            } else {
+                onItemClickListener?.onItemCommandBtnClick(
+                    holder.itemView,
+                    holder.adapterPosition,
+                    item,
+                    Command.SAY_ERROR
+                )
+            }
         }
     }
 

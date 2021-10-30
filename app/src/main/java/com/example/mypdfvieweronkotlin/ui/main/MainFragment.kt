@@ -1,22 +1,21 @@
 package com.example.mypdfvieweronkotlin.ui.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mypdfvieweronkotlin.R
 import com.example.mypdfvieweronkotlin.databinding.MainFragmentBinding
 import com.example.mypdfvieweronkotlin.domain.Command
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
 
 class MainFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private lateinit var adapter: MainAdapter
     private lateinit var viewModel: MainViewModel
@@ -26,7 +25,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -47,24 +46,25 @@ class MainFragment : Fragment() {
             adapter.notifyDataSetChanged()
         })
         adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClickToDownload(
+            override fun onItemCommandBtnClick(
                 view: View,
                 position: Int,
                 item: Document,
-                command: Command
+                command: Command,
             ) {
                 when (command) {
-                    Command.DOWNLOAD -> {
-                        viewModel.downloadItem(item)
+                    Command.DOWNLOAD -> viewModel.downloadItem(item)
+                    Command.DELETE -> viewModel.deleteItem(item)
+                    Command.CHECK_STATUS -> viewModel.checkStatus(item)
+                    Command.SAY_ERROR -> {
+                        val text = getString(R.string.say_error_file_view_text)
+                        val duration = Toast.LENGTH_SHORT
+                        val toast = Toast.makeText(context, text, duration)
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
                     }
-                    Command.DELETE -> {
-                        viewModel.deleteItem(item)
-                    }
-                    Command.CHECK_STATUS -> {
-                        viewModel.checkStatus(item)
-                    }
-                    Command.WATCH -> {
-                        // на будущее добавить переход к фрагменту отображения данных
+                    else -> {
+                        // Здесь можно будет добавить какое ни будь другое действие ИНОЕ
                     }
                 }
             }
