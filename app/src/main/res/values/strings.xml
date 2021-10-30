@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">My PDF Viewer On Kotlin</string>
+    <string name="say_error_file_view_text">Файл НЕ скачан! Просмотр доступен только для загруженных файлов. Загрузите и попробуйте снова!</string>
+    <string name="iv_plug_title">Заглушка</string>
+    <string name="tv_title_text">Наименование элемента</string>
+    <string name="iv_download_contentDescription">Загрузить документ</string>
+    <string name="iv_delete_contentDescription">Удалить документ</string>
+    <string name="iv_error_contentDescription">Ошибка! Проверить и исправить по возможности</string>
+    <string name="iv_unknown_contentDescription">Состояние документа неизвестно. Проверить состояние.</string>
+    <string name="main_fragment_label">Список документов PDF</string>
+    <string name="viewer_fragment_label">Просмотр PDF документа</string>
 </resources>

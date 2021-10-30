@@ -4,5 +4,6 @@ enum class Command {
     DOWNLOAD,
     DELETE,
     WATCH,
-    CHECK_STATUS
+    CHECK_STATUS,
+    SAY_ERROR
 }

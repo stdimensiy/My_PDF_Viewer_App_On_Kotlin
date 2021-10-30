@@ -26,20 +26,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
+    // Функция инициализирует процесс загрузки файла PDF
     fun downloadItem(item: Document) {
-        // Загрузка документа с удаленного сервера во внутреннее хранилище
         item.currentLiveData.postValue(LoadStatus.IS_LOADING)
         repository.getDocument(item, getApplication())
     }
 
+    // Функция инициализирует удаление файла PDF (ни список, ни внешнее хранилище не затрагиваются)
     fun deleteItem(item: Document) {
-        // Удаление документа из внутренней памяти  (ни список ни внешнее хранилище не затрагиваются)
         item.currentLiveData.postValue(LoadStatus.IS_LOADING)
         repository.deleteFile(item, getApplication())
     }
 
+    // Функция инициализирует проверку статуса документа
     fun checkStatus(item: Document) {
-        // Принудительная проверка статуса документа при ошибкеили невыясненном состоянии
         item.currentLiveData.postValue(LoadStatus.IS_LOADING)
         repository.fileIsPresent(item, getApplication())
     }

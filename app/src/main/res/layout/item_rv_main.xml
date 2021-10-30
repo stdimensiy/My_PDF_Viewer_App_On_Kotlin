@@ -2,15 +2,13 @@
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="4dp"
-    android:elevation="2dp"
-    android:padding="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp"
-    app:contentPadding="0dp">
+    android:layout_height="@dimen/cardViewHeight"
+    android:layout_margin="@dimen/base_margin"
+    android:elevation="@dimen/cardViewElevation"
+    android:padding="@dimen/cardViewPadding"
+    app:cardCornerRadius="@dimen/cardViewRadius"
+    app:cardElevation="@dimen/cardViewElevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_item"
@@ -19,84 +17,92 @@
 
         <ImageView
             android:id="@+id/imageView_plug"
-            android:layout_width="60dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/iv_plug_width"
+            android:layout_height="@dimen/iv_plug_height"
             android:baselineAlignBottom="false"
-            android:contentDescription="Заглушка"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:contentDescription="@string/iv_plug_title"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_pdf" />
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Наименование элемента"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_margin="@dimen/base_margin"
+            android:text="@string/tv_title_text"
+            android:textSize="@dimen/tv_title_textSize"
+            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView_download"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
             app:layout_constraintStart_toEndOf="@+id/imageView_plug"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView_download"
-            android:layout_width="50dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="@dimen/cl_command_width"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:baselineAlignBottom="false"
-            android:contentDescription="Заглушка загрузки"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_twotone_cloud_download_24" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView_delete"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:baselineAlignBottom="false"
-            android:contentDescription="Заглушка удаления"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_twotone_delete_24" />
+            <ImageView
+                android:id="@+id/imageView_download"
+                android:layout_width="@dimen/iv_command_width"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/base_margin"
+                android:baselineAlignBottom="false"
+                android:contentDescription="@string/iv_download_contentDescription"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_twotone_cloud_download_24" />
 
-        <ImageView
-            android:id="@+id/imageView_error"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:baselineAlignBottom="false"
-            android:contentDescription="Заглушка ошибки"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_twotone_error_24" />
+            <ImageView
+                android:id="@+id/imageView_delete"
+                android:layout_width="@dimen/iv_command_width"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/base_margin"
+                android:baselineAlignBottom="false"
+                android:contentDescription="@string/iv_delete_contentDescription"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_twotone_delete_24" />
 
-        <ImageView
-            android:id="@+id/imageView_unknown"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:baselineAlignBottom="false"
-            android:contentDescription="Заглушка ошибки"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_twotone_live_help_24" />
+            <ImageView
+                android:id="@+id/imageView_error"
+                android:layout_width="@dimen/iv_command_width"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/base_margin"
+                android:baselineAlignBottom="false"
+                android:contentDescription="@string/iv_error_contentDescription"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_twotone_error_24" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_download"
-            app:layout_constraintEnd_toEndOf="@+id/imageView_download"
-            app:layout_constraintTop_toTopOf="@+id/imageView_download" />
+            <ImageView
+                android:id="@+id/imageView_unknown"
+                android:layout_width="@dimen/iv_command_width"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/base_margin"
+                android:baselineAlignBottom="false"
+                android:contentDescription="@string/iv_unknown_contentDescription"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_twotone_live_help_24" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_download"
+                app:layout_constraintEnd_toEndOf="@+id/imageView_download"
+                app:layout_constraintTop_toTopOf="@+id/imageView_download" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
