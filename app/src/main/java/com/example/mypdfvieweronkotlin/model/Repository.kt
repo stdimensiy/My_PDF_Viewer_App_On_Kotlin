@@ -12,6 +12,10 @@ import okhttp3.*
 import java.io.File
 import java.io.IOException
 
+/**
+ * Класс Репозитория (объединяет в себе как методы работающие в удаленным сервером так и методы
+ * работающие с локальным хранилищем
+ */
 class Repository : LocalRepository, RemoteRepository {
     private val basePdfUrlPath = RemoteConstants.PDF_SERVER_URL
     private val networkServicesPdfApp: RetrofitServicesPdfApp = Common.retrofitService
@@ -42,7 +46,7 @@ class Repository : LocalRepository, RemoteRepository {
             object : retrofit2.Callback<List<Document>> {
                 override fun onResponse(
                     call: retrofit2.Call<List<Document>>,
-                    response: retrofit2.Response<List<Document>>
+                    response: retrofit2.Response<List<Document>>,
                 ) {
                     response.body()?.let { callBack.onResult(it) }
                 }
