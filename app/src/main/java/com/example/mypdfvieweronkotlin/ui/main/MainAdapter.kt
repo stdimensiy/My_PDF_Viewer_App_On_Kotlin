@@ -11,7 +11,10 @@ import com.example.mypdfvieweronkotlin.domain.Command
 import com.example.mypdfvieweronkotlin.domain.Document
 import com.example.mypdfvieweronkotlin.domain.LoadStatus
 import com.example.mypdfvieweronkotlin.ui.interfaces.OnItemClickListener
-
+/**
+ * Класс - Адаптер для RecyclerView
+ * в данном решении он ведет себя частично как презентер, вьюхой для него является Holder
+ */
 class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
     var items: List<Document> = listOf()
     private var onItemClickListener: OnItemClickListener? = null
