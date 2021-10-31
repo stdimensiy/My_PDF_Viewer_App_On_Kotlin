@@ -1,5 +1,8 @@
 package com.example.mypdfvieweronkotlin.model
 
+/**
+ * Объект (синглтон) набор констант уровня модели
+ */
 object RemoteConstants {
     /** Server endpoint  базовый адрес размещения PDF файлов
      *  или сервиса по их генерации (выдачи)  */
