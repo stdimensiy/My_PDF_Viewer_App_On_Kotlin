@@ -9,6 +9,7 @@
 
 - Текущий результат (презентация)
 <p align="center">
+  <video src="https://user-images.githubusercontent.com/73497940/144704819-b2370c0e-7e17-4761-ad53-570f7a239726.mp4"></video>
   <img src="https://github.com/stdimensiy/My_PDF_Viewer_App_On_Kotlin/raw/develop/snapshots/My_PDF_Viewer_App_On_Kotlin_1.jpg" width="150" title="Домашний фрагмент">
   <img src="https://github.com/stdimensiy/My_PDF_Viewer_App_On_Kotlin/raw/develop/snapshots/My_PDF_Viewer_App_On_Kotlin_2.jpg" width="150" alt="Фрагмент отображения PDF файла  (просмотрщик)">
   <img src="https://github.com/stdimensiy/My_PDF_Viewer_App_On_Kotlin/raw/develop/snapshots/My_PDF_Viewer_App_On_Kotlin_3.jpg" width="150" alt="Сообщение об ошибке">
